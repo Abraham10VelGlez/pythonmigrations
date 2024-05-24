@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+  </head>
+  <body>
+    <!--configuracion de datos = librerias-->
+    <py-config>
+            plugins = [
+              "https://pyscript.net/latest/plugins/python/py_tutor.py"
+            ]
+        </py-config>
+
+        <section class="pyscript">
+            Hello world! Python <br>
+            This is the current date and time, as computed by Python:
+            <!-- codigo vivo de datos python -->
+            <py-script>
+                from datetime import datetime
+                now = datetime.now()
+                #display(now.strftime("%m/%d/%Y, %H:%M:%S"))
+                display(now.strftime("%m/%d/%Y"))
+
+                def greetings(name):
+                    print(f'Hi, {name}')
+                    display(f'Hi, {name}')
+
+                greetings('John Doe')
+
+
+
+                def save_avg():
+                    text =  Element("commentavg").value
+
+                    print(text)
+
+
+                def save_avg_g():
+                    import os
+                    from flask import Flask, render_template, request
+                    from werkzeug import secure_filename
+                    app = Flask(__name__)
+                    app.config['UPLOAD_FOLDER'] = './Archivos PDF'
+
+                    text =  Element("fileavg").value
+                    print(text)
+                     # obtenemos el archivo del input "archivo"
+                     f = request.files['fileavg']
+                     filename = secure_filename(f.filename)
+  # Guardamos el archivo en el directorio "Archivos PDF"
+                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+  # Retornamos una respuesta satisfactoria
+                     return "<h1>Archivo subido exitosamente</h1>"
+
+
+            </py-script>
+        </section>
+
+        <!-- Put Python code inside the the <py-script> tag -->
+  <py-script>
+    display("Hello World!")
+    print("hola mundooo !!!!!!")
+  </py-script>
+
+
+  <textarea id="commentavg" class="block border"></textarea>
+  <button id="save" py-click="save_avg()">Save</button>
+  <br>
+  <br>
+  <br>
+  <form action="/upload_studioa" method="post" enctype="multipart/form-data">
+    <input type="file" id="fileavg" name="fileavg" />
+    <button id="save" py-click="save_avg_g()">Save</button>
+  </form>
+
+
+
+  </body>
+</html>
